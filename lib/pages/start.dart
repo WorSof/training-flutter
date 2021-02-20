@@ -48,12 +48,44 @@ class _StartPageState extends State<StartPage> {
   }
 
   Widget _getList() {
+    Map<String, dynamic> user = {
+      'name': 'JUAN CAMILO',
+      'lastname': 'MARIN OCHOA',
+      'age': 22,
+    };
+
+    List<Map<String, dynamic>> users = [
+      {
+        'name': 'JUAN CAMILO',
+        'lastname': 'MARIN OCHOA',
+        'age': 22,
+      },
+      {
+        'name': 'JEISSON',
+        'lastname': 'TOBON BOHORQUEZ',
+        'age': 23,
+      }
+    ];
+
+    List<String> products = [
+      'NARANJA',
+      'UVA',
+      'MANZADA',
+      'FRESA',
+      'MANGO',
+    ];
+
     return ListView(
       children: [
-        Text('Usuario 1'),
-        Text('Usuario 2'),
-        Text('Usuario 3'),
-        Text('Usuario 4'),
+        for (var item in users)
+          Column(
+            children: [
+              Text(item['name']),
+              Text(item['lastname']),
+              Text('Edad: ${item['age']}'),
+              Divider(),
+            ],
+          ),
       ],
     );
   }
