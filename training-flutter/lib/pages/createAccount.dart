@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hola_mundo/apis/createUser.dart';
 import 'package:hola_mundo/models/account.model.dart';
 import 'package:hola_mundo/widgets/appBar.dart';
 import 'package:email_validator/email_validator.dart';
@@ -27,6 +28,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final CreateUserService _createUserService = CreateUserService();
 
   Account newAccount;
 
@@ -78,6 +81,20 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       ),
       child: _getListView(),
     );
+  }
+
+  void _runCreateAccount() {
+    _createUserService
+        .execute()
+        .then((response) {
+          if (response['data'] != '') {
+            print('Usuario creado correctamente');
+          } else {
+            print('Se produjo un error creando el usuario');
+          }
+        })
+        .catchError((error) => {})
+        .whenComplete(() => {});
   }
 
   Widget _getListView() => ListView(
@@ -173,7 +190,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                         hour: _fieldHourController.text,
                       );
 
-                      print(newAccount.name);
+                      _runCreateAccount();
                     } else {
                       _scaffoldKey.currentState.showSnackBar(
                         SnackBar(

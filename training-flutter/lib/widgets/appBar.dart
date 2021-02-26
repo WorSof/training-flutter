@@ -11,7 +11,10 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title),
+      title: Text(
+        title,
+        style: TextStyle(fontFamily: 'Comfortaa'),
+      ),
       centerTitle: true,
     );
   }

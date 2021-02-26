@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hola_mundo/apis/getPots.dart';
 import 'package:hola_mundo/pages/createAccount.dart';
 import 'package:hola_mundo/pages/textFormField.dart';
+import 'package:hola_mundo/src/notifiers/theme.dart';
 import 'package:hola_mundo/widgets/appBar.dart';
 
 class StartPage extends StatefulWidget {
@@ -17,6 +18,9 @@ class _StartPageState extends State<StartPage> {
   final GetPostService _postService = GetPostService();
   final String _postFile = 'lib/assets/images/posts.png';
   final double _horizontalSpacing = 26.0;
+  final Brightness _deviceBrightness =
+      MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+          .platformBrightness;
 
   List posts = [];
 
@@ -73,7 +77,7 @@ class _StartPageState extends State<StartPage> {
           subtitle: Text(
             'Usuario: ${item['userId']}',
             style: TextStyle(
-              color: Colors.black.withOpacity(0.6),
+              color: Theme.of(context).textTheme.bodyText1.color,
               fontSize: 13.0,
             ),
           ),
@@ -99,6 +103,8 @@ class _StartPageState extends State<StartPage> {
       );
 
   Widget _getList(BuildContext context) {
+    final ThemeChanger themeChanger = ThemeChanger();
+
     return ListView(
       children: [
         for (var item in posts) _getCard(item),
@@ -116,6 +122,14 @@ class _StartPageState extends State<StartPage> {
           child: RaisedButton(
             onPressed: () => _getPosts(),
             child: Text('Obtener Publicaciones'),
+          ),
+        ),
+        SizedBox(height: 5.0),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: _horizontalSpacing),
+          child: RaisedButton(
+            onPressed: () => themeChanger.setTheme(_deviceBrightness),
+            child: Text('Cambiar Apariencia'),
           ),
         ),
       ],

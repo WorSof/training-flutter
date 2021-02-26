@@ -1,4 +1,4 @@
-#Tue Feb 23 19:19:34 COT 2021
+#Thu Feb 25 19:26:56 COT 2021
 base.0=/Users/camilo/Desktop/flutter/training-flutter/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex
