@@ -16,6 +16,20 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
         style: TextStyle(fontFamily: 'Comfortaa'),
       ),
       centerTitle: true,
+      // leading: IconButton(
+        // icon: Icon(Icons.account_circle_outlined),
+        // onPressed: () => null,
+      // ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.exit_to_app),
+          onPressed: () => print('Saliendo de la aplicación'),
+        ),
+        IconButton(
+          icon: Icon(Icons.add_shopping_cart),
+          onPressed: () => null,
+        )
+      ],
     );
   }
 }

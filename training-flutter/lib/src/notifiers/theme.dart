@@ -4,8 +4,6 @@ import 'package:hola_mundo/src/themes/dark.dart';
 import 'package:hola_mundo/src/themes/light.dart';
 
 class ThemeChanger with ChangeNotifier {
-  final Preferences _prefs = Preferences();
-
   ThemeData getTheme(String theme, Brightness deviceBrightness) {
     ThemeData response;
 
@@ -21,13 +19,13 @@ class ThemeChanger with ChangeNotifier {
   }
 
   void setTheme(Brightness deviceBrightness) {
+    final Preferences _prefs = Preferences();
+
     if (_prefs.theme == 'device') {
       _prefs.theme = (deviceBrightness == Brightness.dark) ? 'light' : 'dark';
     } else {
       _prefs.theme = (_prefs.theme == 'light') ? 'dark' : 'light';
     }
-
-    print(_prefs.theme);
 
     notifyListeners();
   }

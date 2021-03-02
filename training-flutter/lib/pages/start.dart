@@ -4,6 +4,8 @@ import 'package:hola_mundo/pages/createAccount.dart';
 import 'package:hola_mundo/pages/textFormField.dart';
 import 'package:hola_mundo/src/notifiers/theme.dart';
 import 'package:hola_mundo/widgets/appBar.dart';
+import 'package:hola_mundo/widgets/appDrawer.dart';
+import 'package:provider/provider.dart';
 
 class StartPage extends StatefulWidget {
   static String routeName = 'start';
@@ -18,9 +20,6 @@ class _StartPageState extends State<StartPage> {
   final GetPostService _postService = GetPostService();
   final String _postFile = 'lib/assets/images/posts.png';
   final double _horizontalSpacing = 26.0;
-  final Brightness _deviceBrightness =
-      MediaQueryData.fromWindow(WidgetsBinding.instance.window)
-          .platformBrightness;
 
   List posts = [];
 
@@ -51,10 +50,19 @@ class _StartPageState extends State<StartPage> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeChanger themeChanger = Provider.of<ThemeChanger>(context);
+    final Brightness deviceBrightness =
+        MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+            .platformBrightness;
+
     return Scaffold(
       appBar: AppBarWidget('Lista de usuarios'),
+      drawer: AppDrawer(),
       body: _getList(context),
-      floatingActionButton: _floatingButton(context),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => themeChanger.setTheme(deviceBrightness),
+        child: Icon(Icons.invert_colors),
+      ),
     );
   }
 
@@ -103,8 +111,6 @@ class _StartPageState extends State<StartPage> {
       );
 
   Widget _getList(BuildContext context) {
-    final ThemeChanger themeChanger = ThemeChanger();
-
     return ListView(
       children: [
         for (var item in posts) _getCard(item),
@@ -128,18 +134,11 @@ class _StartPageState extends State<StartPage> {
         Container(
           margin: EdgeInsets.symmetric(horizontal: _horizontalSpacing),
           child: RaisedButton(
-            onPressed: () => themeChanger.setTheme(_deviceBrightness),
-            child: Text('Cambiar Apariencia'),
+            onPressed: () => _go(context, CreateAccountPage.routeName),
+            child: Text('Crear cuenta'),
           ),
         ),
       ],
-    );
-  }
-
-  Widget _floatingButton(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () => _go(context, CreateAccountPage.routeName),
-      child: Icon(Icons.person_add),
     );
   }
 }
