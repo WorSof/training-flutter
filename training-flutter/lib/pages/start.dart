@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hola_mundo/apis/getPots.dart';
 import 'package:hola_mundo/pages/createAccount.dart';
+import 'package:hola_mundo/pages/otherWidgets.dart';
 import 'package:hola_mundo/pages/textFormField.dart';
 import 'package:hola_mundo/src/notifiers/theme.dart';
 import 'package:hola_mundo/widgets/appBar.dart';
@@ -136,6 +137,14 @@ class _StartPageState extends State<StartPage> {
           child: RaisedButton(
             onPressed: () => _go(context, CreateAccountPage.routeName),
             child: Text('Crear cuenta'),
+          ),
+        ),
+        SizedBox(height: 5.0),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: _horizontalSpacing),
+          child: RaisedButton(
+            onPressed: () => _go(context, OtherWidgetsPage.routeName),
+            child: Text('Otros Widgets'),
           ),
         ),
       ],

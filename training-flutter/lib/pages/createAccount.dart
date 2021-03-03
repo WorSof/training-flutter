@@ -79,25 +79,53 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         vertical: 30.0,
         horizontal: 40.0,
       ),
-      child: _getListView(),
+      child: _getListView(context),
     );
   }
 
-  void _runCreateAccount() {
+  void _runCreateAccount(BuildContext context) {
     _createUserService
         .execute()
         .then((response) {
           if (response['data'] != '') {
-            print('Usuario creado correctamente');
+            _getAlert(
+              context,
+              'Cuenta creada',
+              'Cuenta creada con exito, ahora puedes iniciar sesión',
+            );
           } else {
-            print('Se produjo un error creando el usuario');
+            _getAlert(
+              context,
+              'Se produjo un error',
+              'Disculpa las molestias, por favor intentalo nuevamente',
+            );
           }
         })
         .catchError((error) => {})
         .whenComplete(() => {});
   }
 
-  Widget _getListView() => ListView(
+  Future<void> _getAlert(BuildContext context, String title, String text) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: [Text(text)],
+          ),
+        ),
+        actions: [
+          TextButton(
+            child: Text('Cerrar'),
+            onPressed: () => Navigator.of(context).pop(),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _getListView(BuildContext context) => ListView(
         children: [
           Text(
             'Creación de cuenta',
@@ -190,7 +218,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                         hour: _fieldHourController.text,
                       );
 
-                      _runCreateAccount();
+                      _runCreateAccount(context);
                     } else {
                       _scaffoldKey.currentState.showSnackBar(
                         SnackBar(
